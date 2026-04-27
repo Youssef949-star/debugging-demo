@@ -30,11 +30,11 @@ class DataManager {
     return data[0];
   }
 
-  ~DataManager() { delete data; }
+  ~DataManager() { delete[] data; }
 };
 
 void unsafeFunction() {
-  char buffer[10];
+  char buffer[50];
 
   strcpy(buffer, "This is way too long for buffer");
 
@@ -44,7 +44,7 @@ void unsafeFunction() {
 int globalVar = 0;
 
 int compute(int x) {
-  int result;
+  int result = 0;
 
   if (x > 10)
     result = x * 2;
@@ -62,6 +62,8 @@ void memoryLeakDemo() {
   *leak2 = 20;
 
   std::cout << leak1[0] + *leak2 << '\n';
+  delete[] leak1;
+  delete leak2;
 }
 
 void vectorIssues() {
@@ -70,10 +72,9 @@ void vectorIssues() {
   v.push_back(1);
   v.push_back(2);
 
-  std::cout << v[10] << '\n';
+  std::cout << v[1] << '\n';
 
   v.clear();
-  std::cout << v.front() << '\n';
 }
 
 int main() {
